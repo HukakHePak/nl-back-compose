@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  mongo:
+    image: mongo:6.0
+    container_name: mongo
+    restart: always
+    volumes:
+      - ./db:/data/db
+    networks: 
+      - mongo-network
+
+networks: 
+  mongo-network:
+    name: mongo-network
+    driver: bridge
+    external: true

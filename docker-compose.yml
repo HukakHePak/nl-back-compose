@@ -1,14 +1,5 @@
 version: '3.9'
 services:
-  mongo:
-    image: mongo:6.0
-    container_name: mongo
-    restart: always
-    volumes:
-      - ./db:/data/db
-    networks: 
-      - mongo-network
-
   nginx:
     image: nginx:alpine-slim
     container_name: nginx
@@ -17,24 +8,24 @@ services:
       - 443:443
     restart: always
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx:/etc/nginx/nginx
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    networks: 
-      - mongo-network
-
+    networks:
+      - nginx-network
 
 networks: 
   mongo-network:
     name: mongo-network
     driver: bridge
+
+  nginx-network:
+    name: nginx-network
+    driver: bridge
+
+  mysql-network:
+    name: mysql-network
+    driver: bridge
     
-  # certbot:
-  #   image: certbot/certbot
-  #   container_name: certbot
-  #   depends_on:
-  #     - nginx
-  #   volumes: 
-  #     - ./certbot/conf:/etc/letsencrypt
-  #     - ./certbot/www:/var/www/certbot
-  # command: certonly --webroot -w /var/www/certbot --force-renewal --email nikak_ne_rak@mail.ru -d note-lawn.ru -d www.note-lawn.ru --agree-tos
+  

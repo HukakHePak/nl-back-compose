@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    volumes:
+      - ./db:/data/db
+    networks: 
+      - mysql-network
+
+networks: 
+  mysql-network:
+    name: mysql-network
+    driver: bridge
+    external: true

@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes: 
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/log:/var/log/letsencrypt
+    command: certonly --agree-tos -d "*.dev.note-lawn.ru,*.note-lawn.ru,note-lawn.ru" --preferred-challenges dns --manual  --server https://acme-v02.api.letsencrypt.org/directory --manual-public-ip-logging-ok -w /var/www/certbot --force-renewal --register-unsafely-without-email  
+
+# run: docker compose -f docker-compose.certbot run certbot for setting dns TXT
